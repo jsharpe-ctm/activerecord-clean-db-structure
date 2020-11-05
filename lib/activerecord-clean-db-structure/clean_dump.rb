@@ -136,7 +136,7 @@ module ActiveRecordCleanDbStructure
     def order_column_definitions(source)
       result = []
 
-      parse_column_name = ->(line) { line.match(/^    "?([^" ]+)/)[1] }
+      parse_column_name = ->(line) { line.match(/^  "?([^" ]+)/)[1] }
       with_column_separator = ->(line) { line.sub(/,?\n$/, ",\n") }
       without_column_separator = ->(line) { line.sub(/,\n$/, "\n") }
 
@@ -148,10 +148,10 @@ module ActiveRecordCleanDbStructure
           inside_table = true
           columns = []
           result << source_line
-        elsif source_line.start_with?(");")
+        elsif source_line.start_with?(")")
           if inside_table
             inside_table = false
-            columns.sort_by!(&:first)
+            columns.sort!
 
             columns[0..-2].each do |_, line|
               result << with_column_separator[line]
