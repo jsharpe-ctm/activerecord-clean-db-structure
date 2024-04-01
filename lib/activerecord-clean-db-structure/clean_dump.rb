@@ -183,7 +183,7 @@ module ActiveRecordCleanDbStructure
 
       # Replace the schema_migrations values.
       dump.sub!(
-        /(?<=INSERT INTO "schema_migrations" \(version\) VALUES).+;\n*/m,
+        /(?<=INSERT INTO `schema_migrations` \(version\) VALUES).+;\n*/m,
         "\n #{values.join("\n,")}\n;\n\n"
       )
     end
